@@ -11,6 +11,8 @@ class AlienInvasion:
         self.screen = pygame.display.set_mode((1200,800))
         pygame.display.set_caption('Inwacja Obcych')
 
+        self.bg_color = (255,192,203)
+
 
     def run_game(self):
         '''Rozpoczęcie pętli głównej gry'''
@@ -18,7 +20,8 @@ class AlienInvasion:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
-            pygame.display.flip
+            self.screen.fill(self.bg_color)
+            pygame.display.flip()
 
 if __name__ == '__main__':
     ai = AlienInvasion()
