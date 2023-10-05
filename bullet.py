@@ -1,5 +1,5 @@
 import pygame
-from pygame.sprite import _Group, Sprite
+from pygame.sprite import  Sprite
 
 class Bullet(Sprite):
     '''Klasa przeznaczona do zarządzania pociskami wystrzeliwanymi przez statek'''
@@ -27,4 +27,3 @@ class Bullet(Sprite):
     def draw_bullet(self):
         '''Wyświetlenie pocisku na ekranie'''
         pygame.draw.rect(self.screen, self.color, self.rect)
-        
