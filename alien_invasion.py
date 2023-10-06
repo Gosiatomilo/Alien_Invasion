@@ -32,6 +32,7 @@ class AlienInvasion:
             self._check_events()
             self.ship.update()
             self.bullets.update()
+            self._updete_aliens()
             self._update_screen()
             
 
@@ -79,7 +80,13 @@ class AlienInvasion:
         for bullet in self.bullets.copy():
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
-    
+
+
+    def _updete_aliens(self):
+        self._check_fleet_edges()
+        self.aliens.update()
+
+
     def _create_fleet(self):
         '''Utworzenie pełnej floty obcych'''
         # Utworzenie obcego
@@ -105,6 +112,21 @@ class AlienInvasion:
         alien.rect.x = alien.x
         alien.rect.y = alien.rect.height + 2 *alien.rect.height * row_number
         self.aliens.add(alien)
+
+    def _check_fleet_edges(self):
+        '''Odpowiednia rekcja, gdy obcy dotrze do krawędzi ekranu'''
+        for alien in self.aliens.sprites():
+            if alien.check_edges():
+                self._change_fleet_direction()
+                break
+
+    def _change_fleet_direction(self):
+        '''Przesnięcie całej floty obcych w dół i zmiana kierunku, w którym się ona porusza'''
+        for alien in self.aliens.sprites():
+            alien.rect.y +=self.settings.fleet_drop_speed
+        self.settings.fleet_direction *= -1
+        
+
 
     def _update_screen(self):
         self.screen.fill(self.settings.bg_color) 

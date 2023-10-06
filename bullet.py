@@ -1,5 +1,5 @@
 import pygame
-from pygame.sprite import  Sprite
+from pygame.sprite import Sprite
 
 class Bullet(Sprite):
     '''Klasa przeznaczona do zarządzania pociskami wystrzeliwanymi przez statek'''
