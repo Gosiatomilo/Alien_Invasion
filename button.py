@@ -1,7 +1,7 @@
 import pygame.font
 
 class Button():
-    def __init__(self, ai_game, screen, msg):
+    def __init__(self, ai_game, msg):
         '''Inicjalizacja atrybutów przycisku'''
         self.screen = ai_game.screen
         self.screen_rect = self.screen.get_rect()
@@ -22,5 +22,8 @@ class Button():
         self.mgs_image_rect = self.mgs_image.get_rect()
         self.mgs_image_rect.center = self.rect.center
 
+    def draw_button(self):
+        # Wyświetlenie pustego przycisku, a następnie komunikatu na nim
+        self.screen.fill(self.button_color, self.rect)
+        self.screen.blit(self.mgs_image, self.mgs_image_rect) 
 
-    
