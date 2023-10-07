@@ -31,7 +31,8 @@ class AlienInvasion:
         while True:
             self._check_events()
             self.ship.update()
-            self.bullets.update()
+            self._updete_bullets()
+           # self.bullets.update()
             self._updete_aliens()
             self._update_screen()
             
@@ -76,10 +77,15 @@ class AlienInvasion:
         '''Uaktualnianie połozenia przycisków i susnięcie tych nie widocznych na ekranie'''
         # Uaktualnianie połozenia przycisków
         self.bullets.update()
-
+        
         for bullet in self.bullets.copy():
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
+        
+        # Sprawdzenie, czy któ≥rykolwiek pocisk trafił obcego
+        # Jeśli takusuwamy pocisk i obcego 
+        collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
+        
 
 
     def _updete_aliens(self):
