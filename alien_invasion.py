@@ -1,9 +1,12 @@
 import sys
+from time import sleep
 import pygame
 from settings import Settings
+from game_starts import GameStats
 from ship import Ship
 from bullet import Bullet
 from alien import Alien
+
 
 
 class AlienInvasion:
@@ -19,6 +22,7 @@ class AlienInvasion:
         self.settings.screen_height = self.screen.get_rect().height
 
         pygame.display.set_caption('Inwacja Obcych')
+        self.stats = GameStats(self)
         self.ship = Ship(self)
 # Utworzenie grupy pocisków 
         self.ship = Ship(self)
@@ -30,10 +34,10 @@ class AlienInvasion:
         '''Rozpoczęcie pętli głównej gry'''
         while True:
             self._check_events()
-            self.ship.update()
-            self._updete_bullets()
-           # self.bullets.update()
-            self._updete_aliens()
+            if self.stats.game_active:
+                self.ship.update()
+                self._updete_bullets()
+                self._updete_aliens()
             self._update_screen()
             
 
@@ -73,6 +77,7 @@ class AlienInvasion:
             new_bullet = Bullet(self)
             self.bullets.add(new_bullet)
 
+
     def _updete_bullets(self):
         '''Uaktualnianie połozenia przycisków i susnięcie tych nie widocznych na ekranie'''
         # Uaktualnianie połozenia przycisków
@@ -82,15 +87,34 @@ class AlienInvasion:
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
         
-        # Sprawdzenie, czy któ≥rykolwiek pocisk trafił obcego
+        # Sprawdzenie, czy którykolwiek pocisk trafił obcego
         # Jeśli takusuwamy pocisk i obcego 
         collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
-        
+        if not self.aliens:
+            self.bullets.empty()
+            self._create_fleet()
+        # Usunięcie pocisków, które zanjdują się poza ekranem
+        for bullet in self.bullets.copy():
+            if bullet.rect.bottom <= 0:
+                self.bullets.remove(bullet)
+
+        self._check_bullet_alien_collisions()
+
+    def _check_bullet_alien_collisions(self):
+        '''Reakcja na kolizje między pociskiem i obcym'''
+        # Usunięcie wszystkich pociskow i obcych, mi≥ędzy którymi doszło do kolizji
+        collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
 
 
     def _updete_aliens(self):
         self._check_fleet_edges()
         self.aliens.update()
+
+        # Wykrywanie kolizji między obcym i statkiem
+        if pygame.sprite.spritecollideany (self.ship, self.aliens):
+            self._ship_hit()
+        self._check_aliens_bottom()
+
 
 
     def _create_fleet(self):
@@ -131,8 +155,16 @@ class AlienInvasion:
         for alien in self.aliens.sprites():
             alien.rect.y +=self.settings.fleet_drop_speed
         self.settings.fleet_direction *= -1
-        
 
+    def _check_aliens_bottom(self):
+        '''Sprawdzenie, czy którykolwiek obcy dotarł do dolenej krawędzi ekranu'''
+        screen_rect = self.screen.get_rect()
+        for alien in self.aliens.sprites():
+            if alien.rect.bottom >= screen_rect.bottom:
+                # Tak samo jak w przypadku zdarzenia statku z obcymi
+                self._ship_hit()
+                break
+        
 
     def _update_screen(self):
         self.screen.fill(self.settings.bg_color) 
@@ -142,6 +174,23 @@ class AlienInvasion:
         self.aliens.draw(self.screen)
 
         pygame.display.flip()
+
+    def _ship_hit(self):
+        '''Reakcja na uderzenie obcego w statek'''
+        # Zmiejszenie wartości przechowywanej w ships_left
+        if self.stats.ships_left > 0:
+            self.stats.ships_left -= 1
+            # Usunięcie zawartości list aliens i bullets 
+            self.aliens.empty()
+            self.bullets.empty()
+            # Utworzenie nowej floty i wyśrodkowanie statku
+            self._create_fleet()
+            self.ship.center_ship()
+            # Pauza 
+            sleep(0.5)
+        else:
+            # Uruchomienie gry w stanie aktywnym
+            self.game_active = False
          
 
 if __name__ == '__main__':
