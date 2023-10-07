@@ -57,16 +57,20 @@ class AlienInvasion:
                     self._check_play_button(mouse_pos)
                     
     def _check_play_button(self, mouse_pos):
-        # Wyzerowanie danych statystycznych gry
-        self.stats.reset_stats()
-        self.stats.game_active = True
-        # Usunięcie zawarotści list aliens i bullets
-        self.aliens.empty()
-        self.bullets.empty()
-        # Utworzenie nowej floty i wyśrodkowanie statku
-        self._create_fleet()
-        self.ship.center_ship()
-        
+        '''Rozpoczęcie nowej gry po kliknięciu przysisku przez uzytkownika'''
+        button_cliked = self.play_button.rect.collidepoint(mouse_pos)
+        if button_cliked and not self.stats.game_active:
+            # Wyzerowanie danych statystycznych gry
+            self.stats.reset_stats()
+            self.stats.game_active = True
+            # Usunięcie zawarotści list aliens i bullets
+            self.aliens.empty()
+            self.bullets.empty()
+            # Utworzenie nowej floty i wyśrodkowanie statku
+            self._create_fleet()
+            self.ship.center_ship()
+            pygame.mouse.set_visible(False)
+
 
     def _check_keydown_events(self,event):
         '''Reakcja na naciśnięcie klawisza'''
@@ -210,6 +214,7 @@ class AlienInvasion:
         else:
             # Uruchomienie gry w stanie aktywnym
             self.game_active = False
+            pygame.mouse.set_visible(True)
          
 
 if __name__ == '__main__':
