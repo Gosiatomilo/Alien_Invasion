@@ -60,6 +60,7 @@ class AlienInvasion:
         '''Rozpoczęcie nowej gry po kliknięciu przysisku przez uzytkownika'''
         button_cliked = self.play_button.rect.collidepoint(mouse_pos)
         if button_cliked and not self.stats.game_active:
+            self.settings.initialize_dynamic_settings()
             # Wyzerowanie danych statystycznych gry
             self.stats.reset_stats()
             self.stats.game_active = True
@@ -124,6 +125,10 @@ class AlienInvasion:
         '''Reakcja na kolizje między pociskiem i obcym'''
         # Usunięcie wszystkich pociskow i obcych, mi≥ędzy którymi doszło do kolizji
         collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
+        if not self.aliens:
+            self.bullets.empty()
+            self._create_fleet()
+            self.settings.increase_speed()
 
 
     def _updete_aliens(self):
