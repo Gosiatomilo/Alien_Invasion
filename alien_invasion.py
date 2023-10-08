@@ -7,6 +7,7 @@ from ship import Ship
 from bullet import Bullet
 from alien import Alien
 from button import Button
+from scoreboard import Scoreboard
 
 
 
@@ -24,6 +25,7 @@ class AlienInvasion:
 
         pygame.display.set_caption('Inwacja Obcych')
         self.stats = GameStats(self)
+        self.sb = Scoreboard(self)
         self.ship = Ship(self)
 # Utworzenie grupy pocisków 
         self.ship = Ship(self)
@@ -64,6 +66,7 @@ class AlienInvasion:
             # Wyzerowanie danych statystycznych gry
             self.stats.reset_stats()
             self.stats.game_active = True
+            self.sb.prep_score()
             # Usunięcie zawarotści list aliens i bullets
             self.aliens.empty()
             self.bullets.empty()
@@ -125,6 +128,10 @@ class AlienInvasion:
         '''Reakcja na kolizje między pociskiem i obcym'''
         # Usunięcie wszystkich pociskow i obcych, mi≥ędzy którymi doszło do kolizji
         collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
+        if collisions:
+            for aliens in collisions.values():
+                self.stats.score += self.settings.alien_points * len(aliens)
+            self.sb.prep_score()
         if not self.aliens:
             self.bullets.empty()
             self._create_fleet()
@@ -196,7 +203,9 @@ class AlienInvasion:
         self.ship.blitme()
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
-        self.aliens.draw(self.screen)
+        self.aliens.draw(self.screen) 
+        # Wyświetlenie informacji o punktacji
+        self.sb.show_score()
         # Wyświetlenie przycisku tylko wtedy, gdy gra jest nieaktywna
         if not self.stats.game_active:
             self.play_button.draw_button()
