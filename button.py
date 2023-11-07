@@ -22,11 +22,11 @@ class Button:
     
     def _prep_msg(self, msg):
         """Positioning of the communicate and centred text on the button"""
-        self.mgs_image = self.font.render(msg, True, self.text_color, self.button_color)
-        self.mgs_image_rect = self.mgs_image.get_rect()
-        self.mgs_image_rect.center = self.rect.center
+        self.msg_image = self.font.render(msg, True, self.text_color, self.button_color)
+        self.msg_image_rect = self.msg_image.get_rect()
+        self.msg_image_rect.center = self.rect.center
 
     def draw_button(self):
         # Displaying an empty button followed by a message on it
         self.screen.fill(self.button_color, self.rect)
-        self.screen.blit(self.mgs_image, self.mgs_image_rect)
+        self.screen.blit(self.msg_image, self.msg_image_rect)

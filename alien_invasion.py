@@ -6,11 +6,11 @@ import pygame
 # initialisation of files
 from settings import Settings
 from game_stats import GameStats
+from scoreboard import Scoreboard
+from button import Button
 from ship import Ship
 from bullet import Bullet
 from alien import Alien
-from button import Button
-from scoreboard import Scoreboard
 
 
 class AlienInvasion:
@@ -66,9 +66,8 @@ class AlienInvasion:
                     
     def _check_play_button(self, mouse_pos):
         """Starting a new game when the user clicks a button"""
-        button_cliked = self.play_button.rect.collidepoint(mouse_pos)
-        if button_cliked and not self.stats.game_active:
-            self.settings.initialize_dynamic_settings()
+        button_clicked = self.play_button.rect.collidepoint(mouse_pos)
+        if button_clicked and not self.stats.game_active:
 
             # Resetting the game statistics
             self.stats.reset_stats()
@@ -157,6 +156,37 @@ class AlienInvasion:
         # Look for aliens hitting the bottom of the screen
         self._check_aliens_bottom()
 
+    def _check_aliens_bottom(self):
+        """Checking whether any aliens have reached the bottom edge of the screen"""
+        screen_rect = self.screen.get_rect()
+        for alien in self.aliens.sprites():
+            if alien.rect.bottom >= screen_rect.bottom:
+                # Just as in the case of a ship incident with aliens
+                self._ship_hit()
+                break
+
+    def _ship_hit(self):
+        """Reaction to the impact of the alien on the ship"""
+        # Reduction of the value stored in ships_left
+        if self.stats.ships_left > 0:
+            self.stats.ships_left -= 1
+            self.sb.prep_ships()
+
+            # Deletion of contents of aliens and bullets lists
+            self.aliens.empty()
+            self.bullets.empty()
+
+            # Creation of a new fleet and centring of the ship
+            self._create_fleet()
+            self.ship.center_ship()
+
+            # Pause
+            sleep(0.5)
+        else:
+            # Starting the game in the active state
+            self.game_active = False
+            pygame.mouse.set_visible(True)
+
     def _create_fleet(self):
         """Creation of a full foreign fleet"""
         # Creation of a foreign
@@ -197,37 +227,6 @@ class AlienInvasion:
             alien.rect.y += self.settings.fleet_drop_speed
         self.settings.fleet_direction *= -1
 
-    def _check_aliens_bottom(self):
-        """Checking whether any aliens have reached the bottom edge of the screen"""
-        screen_rect = self.screen.get_rect()
-        for alien in self.aliens.sprites():
-            if alien.rect.bottom >= screen_rect.bottom:
-                # Just as in the case of a ship incident with aliens
-                self._ship_hit()
-                break
-
-    def _ship_hit(self):
-        """Reaction to the impact of the alien on the ship"""
-        # Reduction of the value stored in ships_left
-        if self.stats.ships_left > 0:
-            self.stats.ships_left -= 1
-            self.sb.prep_ships()
-
-            # Deletion of contents of aliens and bullets lists
-            self.aliens.empty()
-            self.bullets.empty()
-
-            # Creation of a new fleet and centring of the ship
-            self._create_fleet()
-            self.ship.center_ship()
-
-            # Pause
-            sleep(0.5)
-        else:
-            # Starting the game in the active state
-            self.game_active = False
-            pygame.mouse.set_visible(True)
-
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen"""
         self.screen.fill(self.settings.bg_color) 
@@ -249,3 +248,4 @@ class AlienInvasion:
 if __name__ == '__main__':
     ai = AlienInvasion()
     ai.run_game()
+
