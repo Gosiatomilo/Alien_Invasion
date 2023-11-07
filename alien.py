@@ -11,7 +11,7 @@ class Alien(Sprite):
         self.settings = ai_game.settings
 
         # Loading a foreign image and defining the rect attribute
-        self.image = pygame.image.load('/Users/malgorzatatomilo/Documents/GitHub/InwazjaObcych/image/ufo.bmp')
+        self.image = pygame.image.load('./image/ufo.bmp')
         self.rect = self.image.get_rect()
 
         # Placing a new alien near the top left corner of the screen

@@ -13,7 +13,7 @@ class Ship(Sprite):
         self.screen_rect = ai_game.screen.get_rect()
 
         self.image = pygame.image.load(
-            '/Users/malgorzatatomilo/Documents/GitHub/InwazjaObcych/image/rocket.bmp')
+            './image/rocket.bmp')
         self.rect = self.image.get_rect()
 
         # Start each new ship at the bottom center of the screen
