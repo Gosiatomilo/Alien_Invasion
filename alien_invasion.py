@@ -184,7 +184,7 @@ class AlienInvasion:
             sleep(0.5)
         else:
             # Starting the game in the active state
-            self.game_active = False
+            self.stats.game_active = False
             pygame.mouse.set_visible(True)
 
     def _create_fleet(self):
@@ -193,7 +193,7 @@ class AlienInvasion:
         alien = Alien(self)
         alien_width, alien_height = alien.rect.size
         available_space_x = self.settings.screen_width - (2 * alien_width)
-        numer_aliens_x = available_space_x // (2 * alien_width)
+        number_aliens_x = available_space_x // (2 * alien_width)
 
         # Determining how many alien rows will fit on the screen
         ship_height = self.ship.rect.height
@@ -202,7 +202,7 @@ class AlienInvasion:
 
         # Creation of a full foreign fleet
         for row_number in range(number_rows):
-            for alien_number in range(numer_aliens_x):
+            for alien_number in range(number_aliens_x):
                 self._create_alien(alien_number, row_number)
 
     def _create_alien(self, alien_number, row_number):
