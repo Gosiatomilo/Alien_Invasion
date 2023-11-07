@@ -34,7 +34,7 @@ class Ship(Sprite):
             self.x -= self.settings.ship_speed
 
             # Update rect object from self.x
-            self.rect.x = self.x
+        self.rect.x = self.x
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)
