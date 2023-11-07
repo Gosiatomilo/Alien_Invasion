@@ -5,7 +5,7 @@ import pygame
 
 # initialisation of files
 from settings import Settings
-from game_starts import GameStats
+from game_stats import GameStats
 from ship import Ship
 from bullet import Bullet
 from alien import Alien
