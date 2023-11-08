@@ -30,3 +30,8 @@
 
 ## Screenshots
 ![Game screenshot](readme.images/screen.png)
+
+## Links
+- Official Pygame website](https://www.pygame.org/)
+- Game written with the help of the book Python Crash Course, 2nd Edition by Eric Matters
+- Graphics are from https://pixabay.com/
