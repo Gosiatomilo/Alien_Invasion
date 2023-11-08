@@ -1,7 +1,7 @@
 ![](readme.images/readme_baner.png)
 
 
-*The "Alien Invasion" game is a simple yet exciting game written in Python using the Pygame library.*
+*The "Alien Invasion" game is a simple but exciting game written in Python using the Pygame library.*
 *Your goal in the game is to defend Earth from an alien invasion by shooting them with your rocket.* 
 *The game offers classic retro-style gameplay enhanced with dynamic visual effects.*
 
