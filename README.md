@@ -20,9 +20,15 @@
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pygame?logo=Python&logoColor=white&label=Python&color=DB7093)
 ![PyPI - Version](https://img.shields.io/pypi/v/pygame?label=Pygame&color=8FBC8F)
 
+Windows
+``` bash 
+py -m pip install -U pygame --user
+```
+MacOs
+``` bash 
+python3 -m pip install -U pygame --user
+```
 
-
-- Pygame library (you can install it using `pip install pygame`)
 
 ### Instructions:
 1. Clone or download the game repository to your computer.
@@ -32,6 +38,6 @@
 ![Game screenshot](readme.images/screen.png)
 
 ## Links
-- Official Pygame website](https://www.pygame.org/)
 - Game written with the help of the book Python Crash Course, 2nd Edition by Eric Matters
 - Graphics are from https://pixabay.com/
+- Official Pygame website](https://www.pygame.org/)
