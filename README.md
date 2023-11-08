@@ -17,7 +17,11 @@
 - Earn points for each alien you successfully shoot down.
 
 ### Requirements
-- Python 3.x
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pygame?logo=Python&logoColor=white&label=Python&color=DB7093)
+![PyPI - Version](https://img.shields.io/pypi/v/pygame?label=Pygame&color=8FBC8F)
+
+
+
 - Pygame library (you can install it using `pip install pygame`)
 
 ### Instructions:
