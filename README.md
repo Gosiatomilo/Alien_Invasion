@@ -1,4 +1,4 @@
-![](https://github.com/MalgorzataTomilo/InwazjaObcych/assets/135276625/817d14c7-819a-4f0e-9332-1052ec29798e)
+![](readme.images/readme_baner.png)
 
 
 *The "Alien Invasion" game is a simple yet exciting game written in Python using the Pygame library.*
