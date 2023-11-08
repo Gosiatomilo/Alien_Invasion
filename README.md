@@ -39,5 +39,6 @@ python3 -m pip install -U pygame --user
 
 ## Links
 - Game written with the help of the book Python Crash Course, 2nd Edition by Eric Matters
-- Graphics are from https://pixabay.com/
 - Official Pygame website](https://www.pygame.org/)
+- Graphics are from https://pixabay.com/
+
