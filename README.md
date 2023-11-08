@@ -29,4 +29,4 @@
 2. Run the game by executing the `alien_invasion.py` file.
 
 ## Screenshots
-![Game screenshot]()
+![Game screenshot](readme.images/screen.png)
